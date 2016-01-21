@@ -5,7 +5,7 @@
 <h3>Associated Feeds</h3>
 <ul>
 @foreach($team->feeds as $feed)
-	<li><a href="/feeds/{{$team->link}}/tags/{{$feed->id}}">{{$feed->title}}</a></li>
+	<li><a href="/feeds/{{$team->slug}}/tags/{{$feed->id}}">{{$feed->title}}</a></li>
 @endforeach
 </ul>
 <a href="{{URL::to('/')}}">add new feed</a>

@@ -5,7 +5,7 @@
 
 <ul>
 @foreach($user->teams as $team)
-	<li><a href="{{URL::to('/') . '/feeds/' . $team->link}}">{{$team->name}}</a></li>
+	<li><a href="{{URL::to('/') . '/feeds/' . $team->slug}}">{{$team->name}}</a></li>
 @endforeach
 </ul>
 <a href="{{URL::to('/')}}/teams/create">add new team</a>

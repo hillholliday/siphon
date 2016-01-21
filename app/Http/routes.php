@@ -22,14 +22,11 @@ Route::group(['middleware' => 'guest'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('/logout', 'UserController@logout');
-
 	Route::get('/dashboard', 'TeamController@index');
-
 	Route::get('/teams/create', 'TeamController@create');
 	Route::post('/teams/store', 'TeamController@store');
 	Route::get('/teams/edit', 'TeamController@edit');
 	Route::post('/teams/update', 'TeamController@update');
-
 	Route::get('/feeds/{teamname}', 'FeedController@index');
 	Route::get('/feeds/{teamname}/tags/{id}', 'TagController@index');
 });

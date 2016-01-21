@@ -17,7 +17,7 @@ class FeedController extends Controller
      */
     public function index($data)
     {
-        $team = Team::where('link', '=', $data)->with('feeds')->first();
+        $team = Team::where('slug', '=', $data)->with('feeds')->first();
         return view('admin.feeds.index', ['team' => $team]);
     }
 }

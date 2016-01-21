@@ -44,6 +44,7 @@ class TeamController extends Controller
         $team->name = $name;
         $team->slug = $slug;
         $team->save();
+        $user->teams()->save($team);
 
         return redirect('/dashboard');
     }
