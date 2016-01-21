@@ -52,7 +52,7 @@ class UserController extends Controller
             return response()->json(['error' => 'invalid_credentials'], 401);
         }
 
-        return redirect('/dashboard');
+        return redirect('/team');
     }
 
     /**

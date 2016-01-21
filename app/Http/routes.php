@@ -11,8 +11,10 @@
 |
 */
 
+// BEGIN MARKETING
 Route::get('/', 'MarketingController@index');
 
+// BEGIN PUBLIC FACING
 Route::group(['middleware' => 'guest'], function() {
 	Route::get('/login', 'UserController@login');
 	Route::post('/login', 'UserController@authenticate');
@@ -20,12 +22,13 @@ Route::group(['middleware' => 'guest'], function() {
 	Route::post('/signup', 'UserController@store');
 });
 
+// BEGIN AUTH PROTECTION
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('/logout', 'UserController@logout');
-
-	Route::get('/dashboard', 'TeamController@index');
+	Route::get('/team', 'TeamController@index');
 
 	Route::group(['prefix' => 'team'], function () {
+
 		// TEAM MANAGEMENT BASED ON TEAM
 		Route::get('/create', 'TeamController@create');
 		Route::post('/store', 'TeamController@store');
@@ -43,6 +46,9 @@ Route::group(['middleware' => 'auth'], function() {
 
 		// TAG MANAGEMENT BASED ON FEED
 		Route::get('/{slug}/feed/{id}', 'TagController@index');
+		Route::get('/{slug}/feed/{id}/create', 'TagController@create');
+		Route::post('/{slug}/feed/{id}/store/', 'TagController@store');
+		Route::get('/{slug}/feed/{id}/delete/{tagid}', 'TagController@delete');
 	});
 
 });

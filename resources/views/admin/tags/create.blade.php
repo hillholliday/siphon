@@ -1,17 +1,10 @@
 @extends('admin.master')
 @section('content')
 <h2>Create New Tag</h2>
-<form action="signup" method="POST">
-	<label for="email">email</label>
-	<input type="input" name="email" placeholder="email"><br>
-
-	<label for="password">Password</label>
-	<input type="password" name="password" placeholder="password"><br>
-
-	<label for="confirm">Password</label>
-	<input type="password" name="confirm" placeholder="password confirm"><br>
+<form action="/team/{{$team->slug}}/feed/{{$feed->id}}/store" method="POST">
+	<label for="name">tag</label>
+	<input type="input" name="name" placeholder="name"><br>
 	<input type="hidden" name="_token" value="{{csrf_token()}}">
-
 	<input type="submit" value="Submit">
 </form>
 @endsection

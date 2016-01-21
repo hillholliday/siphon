@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use Auth;
 use App\Feed;
+use App\Tag;
 use App\Team;
+use App\Network;
 
 class TagController extends Controller
 {
@@ -15,10 +17,52 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index($team, $feedid)
+    public function index($slug, $feedid)
     {
+        $team = Team::where('slug', '=', $slug)->first();
         $feed = Feed::with('tags.network')->where('id','=',$feedid)->first();
-        return view('admin.tags.index', ['feed' => $feed]);
+        return view('admin.tags.index', ['feed' => $feed, 'team' => $team]);
     }
+
+
+    /**
+     * Return create team view
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create($slug, $feedid) {
+        $team = Team::where('slug', '=', $slug)->with('feeds')->first();
+        $feed = Feed::with('tags.network')->where('id','=',$feedid)->first();
+        $network = Network::all();
+        return view('admin.tags.create', ['feed' => $feed, 'team' => $team]);
+    }
+
+    /**
+     * Return redirect - creates new team
+     *
+     * @return \Illuminate\View\View
+     */
+    public function store($slug, $feedid, Request $request) {
+        $name = $request->input('name');
+
+        $tag = new Tag();
+        $tag->title = $name;
+        $tag->feed_id = $feedid;
+        $tag->network_id = 1;
+        $tag->save();
+
+        return redirect('/team/' . $slug . '/feed/' . $feedid);
+    }
+
+    /**
+     * Return redirect - deletes feed
+     *
+     * @return \Illuminate\View\View
+     */
+    public function delete($slug, $feedid, $tagId) {
+        Tag::destroy($tagId);
+        return redirect('/team/' . $slug . '/feed/' . $feedid);
+    }
+
 
 }
