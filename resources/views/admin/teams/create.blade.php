@@ -1,6 +1,7 @@
 @extends('admin.master')
 @section('content')
-<form action="/teams/store" method="POST">
+<h2>Create New Team</h2>
+<form action="/team/store" method="POST">
 	<label for="name">name</label>
 	<input type="input" name="name" placeholder="name"><br>
 	<input type="hidden" name="_token" value="{{csrf_token()}}">

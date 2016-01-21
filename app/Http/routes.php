@@ -24,12 +24,25 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/logout', 'UserController@logout');
 
 	Route::get('/dashboard', 'TeamController@index');
-	Route::get('/teams/create', 'TeamController@create');
-	Route::post('/teams/store', 'TeamController@store');
-	Route::get('/teams/edit/{id}', 'TeamController@edit');
-	Route::post('/teams/update/{id}', 'TeamController@update');
 
-	Route::get('/feeds/{teamname}', 'FeedController@index');
+	Route::group(['prefix' => 'team'], function () {
+		// TEAM MANAGEMENT BASED ON TEAM
+		Route::get('/create', 'TeamController@create');
+		Route::post('/store', 'TeamController@store');
+		Route::get('/{slug}/edit', 'TeamController@edit');
+		Route::post('/{slug}/update', 'TeamController@update');
+		Route::get('/{slug}/delete', 'TeamController@delete');
 
-	Route::get('/feeds/{teamname}/tags/{id}', 'TagController@index');
+		// FEED MANAGEMENT BASED ON TEAM
+		Route::get('/{slug}/feed', 'FeedController@index');
+		Route::get('/{slug}/feed/create', 'FeedController@create');
+		Route::post('/{slug}/feed/store/', 'FeedController@store');
+		Route::get('/{slug}/feed/edit/{id}', 'FeedController@edit');
+		Route::post('/{slug}/feed/update/{id}', 'FeedController@update');
+		Route::get('/{slug}/feed/delete/{id}', 'FeedController@delete');
+
+		// TAG MANAGEMENT BASED ON FEED
+		Route::get('/{slug}/feed/{id}', 'TagController@index');
+	});
+
 });

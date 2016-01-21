@@ -1,6 +1,7 @@
 @extends('admin.master')
 @section('content')
-<form action="/teams/update/{{$team->id}}" method="POST">
+<h2>Edit Team</h2>
+<form action="/team/{{$team->slug}}/update" method="POST">
 	<label for="name">name</label>
 	<input type="input" name="name" placeholder="name" value="{{$team->name}}"><br>
 	<input type="hidden" name="_token" value="{{csrf_token()}}">

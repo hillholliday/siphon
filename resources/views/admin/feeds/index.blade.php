@@ -5,8 +5,12 @@
 <h3>Associated Feeds</h3>
 <ul>
 @foreach($team->feeds as $feed)
-	<li><a href="/feeds/{{$team->slug}}/tags/{{$feed->id}}">{{$feed->title}}</a></li>
+	<li>
+		<a href="/team/{{$team->slug}}/feed/{{$feed->id}}">{{$feed->title}}</a>
+		<a href="/team/{{$team->slug}}/feed/edit/{{$feed->id}}">edit</a>
+		<a href="/team/{{$team->slug}}/feed/delete/{{$feed->id}}">delete</a>
+	</li>
 @endforeach
 </ul>
-<a href="{{URL::to('/')}}">add new feed</a>
+<a href="/team/{{$team->slug}}/feed/create">add new feed</a>
 @endsection

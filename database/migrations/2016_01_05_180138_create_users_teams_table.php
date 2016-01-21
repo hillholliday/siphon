@@ -16,6 +16,7 @@ class CreateUsersTeamsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('team_id')->unsigned();
+            $table->softDeletes();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

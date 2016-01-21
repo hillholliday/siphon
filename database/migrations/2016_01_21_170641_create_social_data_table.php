@@ -18,6 +18,7 @@ class CreateSocialDataTable extends Migration
             $table->boolean('status')->default(false);
             $table->string('message');
             $table->string('image');
+            $table->softDeletes();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

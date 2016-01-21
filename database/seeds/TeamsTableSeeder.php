@@ -13,22 +13,22 @@ class TeamsTableSeeder extends Seeder
     {
     	DB::table('teams')->insert([
             'name' => 'Hill Holliday',
-            'link' => 'hill-holliday'
+            'slug' => 'hill-holliday'
         ]);
 
         DB::table('teams')->insert([
             'name' => 'Dunkin Donuts',
-            'link' => 'dunkin-donuts'
+            'slug' => 'dunkin-donuts'
         ]);
 
         DB::table('teams')->insert([
             'name' => 'Bank of America',
-            'link' => 'bank-of-america'
+            'slug' => 'bank-of-america'
         ]);
 
         DB::table('teams')->insert([
             'name' => 'Harvard Pilgrim',
-            'link' => 'harvard-pilgrim'
+            'slug' => 'harvard-pilgrim'
         ]);
 
         DB::table('users_teams')->insert([

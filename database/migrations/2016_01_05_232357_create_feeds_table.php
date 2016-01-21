@@ -17,6 +17,7 @@ class CreateFeedsTable extends Migration
             $table->increments('id');
             $table->integer('team_id')->unsigned();
             $table->string('title');
+            $table->softDeletes();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

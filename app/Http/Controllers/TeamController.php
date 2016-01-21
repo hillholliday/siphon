@@ -53,8 +53,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($team_id) {
-        $team = Team::find($team_id);
+    public function edit($slug) {
+        $team = Team::where('slug', '=', $slug)->first();
         return view('admin.teams.edit', ['team' => $team]);
     }
 
@@ -63,10 +63,10 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update($team_id, Request $request) {
+    public function update($slug, Request $request) {
         $name = $request->input('name');
 
-        $team = Team::find($team_id);
+        $team = Team::where('slug', '=', $slug)->first();
         $user = Auth::user();
 
         $team->name = $name;
@@ -74,6 +74,16 @@ class TeamController extends Controller
         $team->save();
 
          return redirect('/dashboard');
+    }
+
+    /**
+     * Return redirect - updates team
+     *
+     * @return \Illuminate\View\View
+     */
+    public function delete($slug) {
+        Team::where('slug', '=', $slug)->delete();
+        return redirect('/dashboard');
     }
 
     /**
@@ -90,7 +100,7 @@ class TeamController extends Controller
     private function getUniqueSlug(\Illuminate\Database\Eloquent\Model $model, $value)
     {
         $slug = \Illuminate\Support\Str::slug($value);
-        $slugCount = count($model->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$model->id}'")->get());
+        $slugCount = count($model->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$model->id}'")->withTrashed()->get());
         return ($slugCount > 0) ? "{$slug}-{$slugCount}" : $slug;
     }
 }

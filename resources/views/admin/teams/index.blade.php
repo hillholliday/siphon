@@ -5,11 +5,12 @@
 <ul>
 @foreach($user->teams as $team)
 	<li>
-		<a href="{{URL::to('/') . '/feeds/' . $team->slug}}">{{$team->name}}</a>
-		<a href="{{URL::to('/') . '/teams/edit/' . $team->id}}">edit</a>
+		<a href="/team/{{$team->slug}}/feed">{{$team->name}}</a>
+		<a href="/team/{{$team->slug}}/edit">edit</a>
+		<a href="/team/{{$team->slug}}/delete">delete</a>
 	</li>
 @endforeach
 </ul>
-<a href="{{URL::to('/')}}/teams/create">add new team</a>
+<a href="/team/create">add new team</a>
 <a href="/logout">logout</a>
 @endsection

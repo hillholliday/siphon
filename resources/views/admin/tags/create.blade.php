@@ -1,4 +1,6 @@
-
+@extends('admin.master')
+@section('content')
+<h2>Create New Tag</h2>
 <form action="signup" method="POST">
 	<label for="email">email</label>
 	<input type="input" name="email" placeholder="email"><br>
@@ -12,3 +14,4 @@
 
 	<input type="submit" value="Submit">
 </form>
+@endsection
