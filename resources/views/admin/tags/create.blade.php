@@ -8,8 +8,7 @@
 
 	<label for="confirm">Password</label>
 	<input type="password" name="confirm" placeholder="password confirm"><br>
-
-	<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+	<input type="hidden" name="_token" value="{{csrf_token()}}">
 
 	<input type="submit" value="Submit">
 </form>

@@ -38,11 +38,10 @@ class TeamController extends Controller
     public function store(Request $request) {
         $name = $request->input('name');
         $team = new Team();
-        $slug = $this->getUniqueSlug($team, $name);
 
         $user = Auth::user();
         $team->name = $name;
-        $team->slug = $slug;
+        $team->slug = $this->getUniqueSlug($team, $name);
         $team->save();
         $user->teams()->save($team);
 
@@ -54,8 +53,9 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit() {
-        return view('admin.teams.edit');
+    public function edit($team_id) {
+        $team = Team::find($team_id);
+        return view('admin.teams.edit', ['team' => $team]);
     }
 
     /**
@@ -63,8 +63,17 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update(Request $request) {
+    public function update($team_id, Request $request) {
+        $name = $request->input('name');
 
+        $team = Team::find($team_id);
+        $user = Auth::user();
+
+        $team->name = $name;
+        $team->slug = $this->getUniqueSlug($team, $name);
+        $team->save();
+
+         return redirect('/dashboard');
     }
 
     /**
