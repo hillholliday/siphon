@@ -1,0 +1,69 @@
+{
+  "name": "Kegerator.js",
+  "version": "0.1.0",
+  "description": "A really awesome Beer Drinking SaaS",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@stash.hhcc.com/hhcc/kegerator.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "start": "node ./bin/www",
+    "staging": "nodejs ./bin/staging"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "kegerator.hhcctech.com",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "connect-livereload": "~0.3.1",
+    "grunt": "~0.4.2",
+    "grunt-concurrent": "~0.4.2",
+    "grunt-contrib-compass": "~0.7.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-htmlmin": "~0.1.3",
+    "grunt-contrib-imagemin": "~0.4.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-html-validation": "~0.1.10",
+    "grunt-newer": "~0.6.1",
+    "grunt-svgmin": "~0.3.0",
+    "babelify": "6.0.1",
+    "grunt-browserify": "3.6.0",
+    "history": "1.12.5",
+    "install": "0.1.8",
+    "re-base": "1.2.1",
+    "react": "^0.14.2",
+    "react-addons-css-transition-group": "0.14.0",
+    "react-catalyst": "0.3.0",
+    "react-dom": "0.14.0",
+    "react-mixin": "3.0.0",
+    "react-router": "1.0.0-rc3",
+    "connect-history-api-fallback": "1.1.0",
+    "autobind-decorator": "1.3.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "connect": "^3.4.0",
+    "cookie-parser": "^1.3.5",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "grunt-nodemon": "^0.4.0",
+    "ldapjs": "^0.7.1",
+    "mongoose": "^4.1.1",
+    "mongoose-timestamp": "^0.4.0",
+    "morgan": "^1.6.1",
+    "request": "^2.60.0",
+    "serve-favicon": "^2.3.0",
+    "swig": "^1.4.2"
+  },
+  "engine": {
+    "node": "0.10.x"
+  }
+}
