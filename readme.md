@@ -1,4 +1,4 @@
-## Laravel PHP Framework
+## My Channel Social Aggregation Platform
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
@@ -6,7 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-My Channel is a laravel based social aggregation tool to consume data in real-time and hand off via an easy to use REST API. Current release is set to include both twitter and instagram tracking, user management and roles, easy to use team structure and social data moderation.
+My Channel is a laravel based social platform tool to consume data in real-time and hand off via an easy to use REST API. Current release is set to include both twitter and instagram tracking, user management and roles, easy to use team structure and social data moderation.
 
 ## Official Documentation
 
