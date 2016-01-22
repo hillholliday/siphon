@@ -16,10 +16,10 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index($slug, $feedid)
+    public function index($team, $feed_id)
     {
-        $team = Team::where('slug', '=', $slug)->first();
-        $feed = Feed::with('tags.network')->where('id','=',$feedid)->first();
+        $team = Team::where('slug', '=', $team)->first();
+        $feed = Feed::with('tags.network')->where('id','=',$feed_id)->first();
         return view('admin.tags.index', ['feed' => $feed, 'team' => $team]);
     }
 
@@ -29,9 +29,9 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create($slug, $feedid) {
-        $team = Team::where('slug', '=', $slug)->with('feeds')->first();
-        $feed = Feed::with('tags.network')->where('id','=',$feedid)->first();
+    public function create($team, $feed_id) {
+        $team = Team::where('slug', '=', $team)->with('feeds')->first();
+        $feed = Feed::with('tags.network')->where('id','=',$feed_id)->first();
         $networks = Network::all();
         return view('admin.tags.create', ['feed' => $feed, 'team' => $team, 'networks' => $networks]);
     }
@@ -41,17 +41,17 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function store($slug, $feedid, Request $request) {
+    public function store($team, $feed_id, Request $request) {
         $name = $request->input('name');
         $network = $request->input('network');
 
         $tag = new Tag();
         $tag->title = $name;
-        $tag->feed_id = $feedid;
+        $tag->feed_id = $feed_id;
         $tag->network_id = $network;
         $tag->save();
 
-        return redirect('/team/' . $slug . '/feed/' . $feedid);
+        return redirect('/team/' . $team . '/feed/' . $feed_id);
     }
 
     /**
@@ -59,9 +59,9 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function delete($slug, $feedid, $tagId) {
+    public function delete($team, $feed_id, $tagId) {
         Tag::destroy($tagId);
-        return redirect('/team/' . $slug . '/feed/' . $feedid);
+        return redirect('/team/' . $team . '/feed/' . $feed_id);
     }
 
 

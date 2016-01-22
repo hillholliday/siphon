@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::post('/{slug}/feed/update/{id}', 'FeedController@update');
 		Route::get('/{slug}/feed/delete/{id}', 'FeedController@delete');
 
+		Route::get('/{slug}/feed/register/{id}', 'SocialController@register');
+
 		// TAG MANAGEMENT BASED ON FEED
 		Route::get('/{slug}/feed/{id}', 'TagController@index');
 		Route::get('/{slug}/feed/{id}/create', 'TagController@create');

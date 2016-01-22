@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use App\Feed;
 use App\Team;
+use App\Network;
 
 class FeedController extends Controller
 {
@@ -14,10 +15,11 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index($data)
+    public function index($team)
     {
-        $team = Team::where('slug', '=', $data)->with('feeds')->first();
-        return view('admin.feeds.index', ['team' => $team]);
+        $team = Team::where('slug', '=', $team)->with('feeds')->first();
+        $networks = Network::all();
+        return view('admin.feeds.index', ['team' => $team, 'networks' => $networks]);
     }
 
     /**
@@ -25,8 +27,8 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create($slug) {
-        $team = Team::where('slug', '=', $slug)->with('feeds')->first();
+    public function create($team) {
+        $team = Team::where('slug', '=', $team)->with('feeds')->first();
         return view('admin.feeds.create', ['team' => $team]);
     }
 
@@ -35,16 +37,16 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function store($slug, Request $request) {
+    public function store($team, Request $request) {
         $name = $request->input('name');
 
-        $team = Team::where('slug', '=', $slug)->first();
+        $team = Team::where('slug', '=', $team)->first();
         $feed = new Feed();
         $feed->title = $name;
         $feed->team_id = $team->id;
         $feed->save();
 
-        return redirect('/team/' . $slug . '/feed');
+        return redirect('/team/' . $team . '/feed');
     }
 
     /**
@@ -52,8 +54,8 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($slug, $feed_id) {
-        $team = Team::where('slug', '=', $slug)->first();
+    public function edit($team, $feed_id) {
+        $team = Team::where('slug', '=', $team)->first();
         $feed = Feed::find($feed_id);
 
         return view('admin.feeds.edit', ['team'=>$team, 'feed' => $feed]);
@@ -64,14 +66,14 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update($slug, $feed_id, Request $request) {
+    public function update($team, $feed_id, Request $request) {
         $name = $request->input('name');
 
         $feed = Feed::find($feed_id);
         $feed->title = $name;
         $feed->save();
 
-        return redirect('/team/' . $slug . '/feed');
+        return redirect('/team/' . $team . '/feed');
     }
 
     /**
@@ -79,9 +81,9 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function delete($slug, $feed_id) {
+    public function delete($team, $feed_id) {
         Feed::destroy($feed_id);
-        return redirect('/team/' . $slug . '/feed');
+        return redirect('/team/' . $team . '/feed');
     }
 
 }

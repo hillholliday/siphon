@@ -12,5 +12,11 @@
 	</li>
 @endforeach
 </ul>
+
+@foreach($networks as $network)
+	<a href="/team/{{$team->slug}}/feed/register/{{$network->id}}">register {{$network->title}} account</a><br/>
+@endforeach
+<br/>
+
 <a href="/team/{{$team->slug}}/feed/create">add new feed</a>
 @endsection

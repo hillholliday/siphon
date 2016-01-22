@@ -53,8 +53,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($slug) {
-        $team = Team::where('slug', '=', $slug)->first();
+    public function edit($team) {
+        $team = Team::where('slug', '=', $team)->first();
         return view('admin.teams.edit', ['team' => $team]);
     }
 
@@ -63,10 +63,10 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update($slug, Request $request) {
+    public function update($team, Request $request) {
         $name = $request->input('name');
 
-        $team = Team::where('slug', '=', $slug)->first();
+        $team = Team::where('slug', '=', $team)->first();
         $user = Auth::user();
 
         $team->name = $name;
@@ -81,8 +81,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function delete($slug) {
-        Team::where('slug', '=', $slug)->delete();
+    public function delete($team) {
+        Team::where('slug', '=', $team)->delete();
         return redirect('/dashboard');
     }
 
