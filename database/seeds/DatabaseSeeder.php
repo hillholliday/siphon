@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TeamsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(FeedsTableSeeder::class);
+        $this->call(NetworkTableSeeder::class);
         $this->call(TagTableSeeder::class);
 
         Model::reguard();

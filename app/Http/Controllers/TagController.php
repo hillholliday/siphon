@@ -33,8 +33,8 @@ class TagController extends Controller
     public function create($slug, $feedid) {
         $team = Team::where('slug', '=', $slug)->with('feeds')->first();
         $feed = Feed::with('tags.network')->where('id','=',$feedid)->first();
-        $network = Network::all();
-        return view('admin.tags.create', ['feed' => $feed, 'team' => $team]);
+        $networks = Network::all();
+        return view('admin.tags.create', ['feed' => $feed, 'team' => $team, 'networks' => $networks]);
     }
 
     /**
@@ -44,11 +44,12 @@ class TagController extends Controller
      */
     public function store($slug, $feedid, Request $request) {
         $name = $request->input('name');
+        $network = $request->input('network');
 
         $tag = new Tag();
         $tag->title = $name;
         $tag->feed_id = $feedid;
-        $tag->network_id = 1;
+        $tag->network_id = $network;
         $tag->save();
 
         return redirect('/team/' . $slug . '/feed/' . $feedid);
