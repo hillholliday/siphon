@@ -22,7 +22,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Return create team view
+     * Return create feed view
      *
      * @return \Illuminate\View\View
      */
@@ -32,7 +32,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Return redirect - creates new team
+     * Return redirect - creates new feed
      *
      * @return \Illuminate\View\View
      */
@@ -49,7 +49,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Return edit team view
+     * Return edit feed view
      *
      * @return \Illuminate\View\View
      */
@@ -61,7 +61,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Return redirect - updates team
+     * Return redirect - updates feed
      *
      * @return \Illuminate\View\View
      */

@@ -66,7 +66,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a new user
+     * Store a new user & login
      *
      * @return \Illuminate\View\View
      */
@@ -109,7 +109,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    protected function getCredentials(Request $request)
+    private function getCredentials(Request $request)
     {
         return $request->only('email', 'password');
     }

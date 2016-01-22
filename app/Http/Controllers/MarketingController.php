@@ -10,7 +10,7 @@ use App\User;
 class MarketingController extends Controller
 {
     /**
-     * Return login view
+     * Return marketing view
      *
      * @return \Illuminate\View\View
      */

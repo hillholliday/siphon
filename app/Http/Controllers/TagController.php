@@ -13,7 +13,7 @@ use App\Network;
 class TagController extends Controller
 {
     /**
-     * Return feeds view
+     * Return tags view
      *
      * @return \Illuminate\View\View
      */
@@ -26,7 +26,7 @@ class TagController extends Controller
 
 
     /**
-     * Return create team view
+     * Return create tag view
      *
      * @return \Illuminate\View\View
      */
@@ -38,7 +38,7 @@ class TagController extends Controller
     }
 
     /**
-     * Return redirect - creates new team
+     * Return redirect - creates new tag
      *
      * @return \Illuminate\View\View
      */
@@ -56,7 +56,7 @@ class TagController extends Controller
     }
 
     /**
-     * Return redirect - deletes feed
+     * Return redirect - deletes tag
      *
      * @return \Illuminate\View\View
      */
