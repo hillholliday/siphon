@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
+use Input;
 use App\Feed;
 use App\Tag;
 use App\Team;
@@ -41,8 +42,8 @@ class TagController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function store($team, $feed_id, Request $request) {
-        $name = $request->input('name');
+    public function store($team, $feed_id) {
+        $name = Input::get('name');
         $network = $request->input('network');
 
         $tag = new Tag();
@@ -51,7 +52,7 @@ class TagController extends Controller
         $tag->network_id = $network;
         $tag->save();
 
-        return redirect('/team/' . $team . '/feed/' . $feed_id);
+        return redirect('/team/' . $team->slug . '/feed/' . $feed_id);
     }
 
     /**

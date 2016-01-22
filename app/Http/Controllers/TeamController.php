@@ -7,6 +7,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 use Auth;
 use App\User;
 use App\Team;
+use Input;
 
 class TeamController extends Controller
 {
@@ -35,8 +36,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function store(Request $request) {
-        $name = $request->input('name');
+    public function store() {
+        $name = Input::get('name');
         $team = new Team();
 
         $user = Auth::user();
@@ -45,7 +46,7 @@ class TeamController extends Controller
         $team->save();
         $user->teams()->save($team);
 
-        return redirect('/dashboard');
+        return redirect('/team');
     }
 
     /**
@@ -63,8 +64,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update($team, Request $request) {
-        $name = $request->input('name');
+    public function update($team) {
+        $name = Input::get('name');
 
         $team = Team::where('slug', '=', $team)->first();
         $user = Auth::user();
@@ -73,7 +74,7 @@ class TeamController extends Controller
         $team->slug = $this->getUniqueSlug($team, $name);
         $team->save();
 
-         return redirect('/dashboard');
+         return redirect('/team');
     }
 
     /**
@@ -83,7 +84,7 @@ class TeamController extends Controller
      */
     public function delete($team) {
         Team::where('slug', '=', $team)->delete();
-        return redirect('/dashboard');
+        return redirect('/team');
     }
 
     /**

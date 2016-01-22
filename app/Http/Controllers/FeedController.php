@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
+use Input;
 use App\Feed;
 use App\Team;
 use App\Network;
@@ -37,16 +38,15 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function store($team, Request $request) {
-        $name = $request->input('name');
-
+    public function store($team) {
+        $name = Input::get('name');
         $team = Team::where('slug', '=', $team)->first();
         $feed = new Feed();
         $feed->title = $name;
         $feed->team_id = $team->id;
         $feed->save();
 
-        return redirect('/team/' . $team . '/feed');
+        return redirect('/team/' . $team->slug . '/feed');
     }
 
     /**
@@ -66,9 +66,8 @@ class FeedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function update($team, $feed_id, Request $request) {
-        $name = $request->input('name');
-
+    public function update($team, $feed_id) {
+        $name = Input::get('name');
         $feed = Feed::find($feed_id);
         $feed->title = $name;
         $feed->save();
