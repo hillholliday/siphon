@@ -91,8 +91,6 @@ class TeamController extends Controller
      * If it already exists, a number suffix will be appended.
      * It probably works only with MySQL.
      *
-     * @link http://chrishayes.ca/blog/code/laravel-4-generating-unique-slugs-elegantly
-     *
      * @param Illuminate\Database\Eloquent\Model $model
      * @param string $value
      * @return string
