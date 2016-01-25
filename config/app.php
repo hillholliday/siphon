@@ -141,7 +141,6 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        Ccovey\LdapAuth\LdapAuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 

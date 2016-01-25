@@ -17,6 +17,7 @@ class CreateTagsTable extends Migration
             $table->integer('feed_id')->unsigned();
             $table->string('title');
             $table->integer('network_id');
+            $table->boolean('status')->default(false);
             $table->softDeletes();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();

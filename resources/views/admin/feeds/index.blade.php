@@ -2,6 +2,11 @@
 @section('content')
 
 <h2>Current Team: {{$team->name}} </h2>
+
+@foreach($networks as $network)
+	<a href="/team/{{$team->slug}}/feed/register/{{$network->id}}">register {{$network->title}} account</a><br/>
+@endforeach
+
 <h3>Associated Feeds</h3>
 <ul>
 @foreach($team->feeds as $feed)
@@ -12,11 +17,6 @@
 	</li>
 @endforeach
 </ul>
-
-@foreach($networks as $network)
-	<a href="/team/{{$team->slug}}/feed/register/{{$network->id}}">register {{$network->title}} account</a><br/>
-@endforeach
 <br/>
-
 <a href="/team/{{$team->slug}}/feed/create">add new feed</a>
 @endsection

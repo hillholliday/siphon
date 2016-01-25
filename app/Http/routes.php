@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/team', 'TeamController@index');
 
 	Route::group(['prefix' => 'team'], function () {
+		Route::get('/test', "SocialController@test");
 
 		// TEAM MANAGEMENT BASED ON TEAM
 		Route::get('/create', 'TeamController@create');
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 		Route::get('/{slug}/feed/register/{id}', 'SocialController@register');
 		Route::post('/{slug}/feed/register/{id}', 'SocialController@processRegistration');
+		Route::get('/{slug}/feed/publish/{id}', 'SocialController@publish');
 
 		// TAG MANAGEMENT BASED ON FEED
 		Route::get('/{slug}/feed/{id}', 'TagController@index');

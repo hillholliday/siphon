@@ -1,167 +1,102 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-window.addEventListener("load", function () {
-    var r = 4;
-    var s_r = r / 20 + Math.sin(0) * r / 20;
-    var num_of_corners = 7;
-    var obj_resolution = 360;
-    var linewidth = 0.02;
+var context = new AudioContext();
+var request = new XMLHttpRequest();
+var url = 'sound/Hoppipolla.mp3';
+var sourceBuffer = null;
+var sourceJs;
+var analyser;
+var source;
+var data;
+var boost = 0;
+request.open('GET', url, true);
+request.responseType = 'arraybuffer';
 
-    var _w = $(window).width();
-    var _h = $(window).height();
+request.onload = function () {
+    context.decodeAudioData(request.response, function (buffer) {
+        sourceJs = context.createScriptProcessor(2048);
 
-    var aspect = _w / _h;
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(65, _w / _h, 0.1, 1000);
-    camera.position.z = 10;
-    var renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setClearColor(new THREE.Color(0x221f26, 1.0));
-    renderer.setSize(_w, _h);
+        sourceJs.buffer = buffer;
+        sourceJs.connect(context.destination);
+        analyser = context.createAnalyser();
+        analyser.smoothingTimeConstant = 0.6;
+        analyser.fftSize = 512;
 
-    document.body.appendChild(renderer.domElement);
+        source = context.createBufferSource();
+        source.buffer = buffer;
 
-    var group = new THREE.Object3D();
-    var sub_group = new THREE.Object3D();
-    var all_vertices = [];
-    var all_sub_vertices = [];
-    var objects = [];
-    var sub_objects = [];
-    var num = 3;
-    var dstnc = 0.2;
-    var border = 0.04;
-    var colors = [0x379392, 0x2E4952, 0x0BC9C7];
+        source.connect(analyser);
+        analyser.connect(sourceJs);
+        source.connect(context.destination);
 
-    for (var i = 0; i < num; i++) {
-        var obj = create_mesh(colors[i], 1 + linewidth * 0.8 * i, all_vertices, i);
-        objects.push(obj);
-        sub_group.add(obj);
-        obj.rotation.y = Math.PI / 180 * 180;
-    }
-
-    group.rotation.x = sub_group.rotation.x = Math.PI / 180 * 360;
-    scene.add(group);
-    scene.add(sub_group);
-
-    function create_mesh(clr, r_coof, ver_arr, wave_type) {
-        var geometry = new THREE.BufferGeometry();
-        var points = generate_points(r, s_r, 5, wave_type);
-        var points2 = generate_points(r * (1 - linewidth), s_r, 5, wave_type);
-        var vertices = generate_vertices(points, points2);
-        ver_arr.push(vertices);
-        geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        var material = new THREE.MeshBasicMaterial({ color: clr, wireframe: false });
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.anim_shape = num_of_corners;
-        mesh.anim = -1;
-        mesh.r_coof = r_coof;
-        mesh.wave_type = wave_type;
-        return mesh;
-    }
-
-    function generate_points(radius, wave_height, anim_shape, wave_type) {
-
-        var new_poistions = [];
-        for (var i = 0; i <= obj_resolution; i++) {
-            var angle = 2 * Math.PI / obj_resolution * i;
-            var radius_addon = 0;
-            var speed_incrementer = counter / 40;
-            var sine_pct = 0.5;
-
-            if (i < sine_pct * obj_resolution || i == obj_resolution) {
-                var smoothing_amount = 0.14;
-                var smooth_pct = 1;
-                if (i < sine_pct * obj_resolution * smoothing_amount) smooth_pct = i / (sine_pct * obj_resolution * smoothing_amount);
-                if (i > sine_pct * obj_resolution * (1 - smoothing_amount) && i <= sine_pct * obj_resolution) smooth_pct = (sine_pct * obj_resolution - i) / (sine_pct * obj_resolution * smoothing_amount);
-                if (i == obj_resolution) smooth_pct = 0;
-
-                if (wave_type == 1) radius_addon = wave_height * smooth_pct * Math.cos((angle + speed_incrementer) * anim_shape);
-                if (wave_type == 0) radius_addon = wave_height * smooth_pct * Math.sin((angle + speed_incrementer) * anim_shape);
-                if (wave_type == 2) radius_addon = wave_height * smooth_pct * Math.cos((angle + Math.PI / 180 * 120 + speed_incrementer) * anim_shape);
+        sourceJs.onaudioprocess = function (e) {
+            data = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(data);
+            boost = 0;
+            for (var i = 0; i < data.length; i++) {
+                boost += data[i];
             }
+            boost = boost / data.length;
+        };
 
-            var x = (radius + radius_addon) * Math.cos(angle + speed_incrementer);
-            var y = (radius + radius_addon) * Math.sin(angle + speed_incrementer);
-            var z = 0;
+        source.start(0);
+    });
+};
 
-            new_poistions.push([x, y, z]);
-        }
+var width = $(window).width();
+var height = $(window).height();
+var aspect = width / height;
+var scene = new THREE.Scene();
 
-        return new_poistions;
+var camera = new THREE.PerspectiveCamera(65, aspect, 0.1, 1000);
+camera.position.z = 10;
+
+var renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setClearColor(new THREE.Color(0x221f26, 1.0));
+renderer.setSize(width, height);
+
+document.body.appendChild(renderer.domElement);
+
+var radius = 5;
+var obj_resolution = 360;
+var obj = new THREE.Line(new THREE.Geometry(), new THREE.LineBasicMaterial({ color: 0xf9f9f9 }));
+
+for (var i = 0; i <= obj_resolution; i++) {
+    var angle = Math.PI / 180 * i;
+    var x = radius * Math.cos(angle);
+    var y = radius * Math.sin(angle);
+    var z = 0;
+    obj.geometry.vertices.push(new THREE.Vector3(x, y, z));
+}
+
+scene.add(obj);
+
+var count = 0;
+var loop = function loop() {
+    count++;
+    updateCircle();
+    requestAnimationFrame(loop);
+    renderer.render(scene, camera);
+};
+
+function updateCircle() {
+    radius = boost * .03;
+    var new_poistions = [];
+
+    for (var i = 0; i <= obj_resolution; i++) {
+        var angle = Math.PI / 180 * i;
+        var x = radius * Math.cos(angle);
+        var y = radius * Math.sin(angle);
+        var z = 0;
+        new_poistions.push(new THREE.Vector3(x, y, z));
     }
+    obj.geometry.vertices = new_poistions;
+    obj.geometry.verticesNeedUpdate = true;
+    // obj.material.color.setHex(Math.floor(Math.random() * 16777215).toString(16));
+}
 
-    function generate_vertices(points, points2) {
-        var vertexPositions = [];
-        var center_point = [0, 0, 0];
-
-        for (var i = 0; i < points.length - 1; i++) {
-            vertexPositions.push(points[i], points2[i], points[i + 1]);
-            vertexPositions.push(points2[i], points2[i + 1], points[i + 1]);
-        }
-
-        vertexPositions.push(points[points.length - 1], points2[points.length - 1], points[0]);
-        var vertices = new Float32Array(vertexPositions.length * 3);
-
-        for (var i = 0; i < vertexPositions.length; i++) {
-            vertices[i * 3 + 0] = vertexPositions[i][0];
-            vertices[i * 3 + 1] = vertexPositions[i][1];
-            vertices[i * 3 + 2] = vertexPositions[i][2];
-        }
-
-        return vertices;
-    }
-
-    function update_vertices_v_2(points, points2, my_arr) {
-        var vertexPositions = [];
-
-        for (var i = 0; i < points.length - 1; i++) {
-            vertexPositions.push(points[i], points2[i], points[i + 1]);
-            vertexPositions.push(points2[i], points2[i + 1], points[i + 1]);
-        }
-
-        vertexPositions.push(points[points.length - 1], points2[points.length - 1], points[0]);
-
-        for (var i = 0; i < vertexPositions.length; i++) {
-            my_arr[i * 3 + 0] = vertexPositions[i][0];
-            my_arr[i * 3 + 1] = vertexPositions[i][1];
-            my_arr[i * 3 + 2] = vertexPositions[i][2];
-        }
-    }
-
-    var last_anim = false;
-    var delay_time = 0.3;
-    var anim_time = 2.12;
-    var rot_angle = 90;
-    var counter = 0;
-    var counter_anim = 0;
-    var frame = 0;
-    var frame_num = 0;
-
-    var loop = function loop() {
-        requestAnimationFrame(loop);
-
-        for (var k = 0; k < objects.length; k++) {
-            var time = (counter + k) / 60;
-            var time_sin = Math.sin(time * 4);
-
-            var obj = objects[k];
-            var rad = r * obj.r_coof;
-            s_r = rad / 15;
-            var points = generate_points(rad, s_r, obj.anim_shape, obj.wave_type);
-            var points2 = generate_points(rad * (1 - linewidth), s_r, obj.anim_shape, obj.wave_type);
-            update_vertices_v_2(points, points2, all_vertices[k]);
-            obj.geometry.attributes.position.needsUpdate = true;
-        }
-
-        renderer.render(scene, camera);
-        counter++;
-    };
-
-    loop();
-}, false);
-
-$('button').on('click', function () {
-    location.href = "/login";
-});
+request.send();
+loop();
 
 },{}]},{},[1]);
