@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Services\TwitterPhirehose as TwitterPhirehose;
+use App\Services\TwitterPhirehose;
+// use fennb\phirehose\lib\Phirehose;
+use \Phirehose;
 
 class TwitterStreamCommand extends Command
 {
@@ -12,7 +14,7 @@ class TwitterStreamCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'twitter:stream';
+    protected $signature = 'twitter:stream {--track=} {api_key} {api_secret} {oauth_key} {oauth_secret} {team_id}';
 
     /**
      * The console command description.
@@ -42,28 +44,12 @@ class TwitterStreamCommand extends Command
         define("TWITTER_CONSUMER_SECRET", $this->argument('api_secret'));
         define("OAUTH_TOKEN", $this->argument('oauth_key'));
         define("OAUTH_SECRET", $this->argument('oauth_secret'));
-        echo "yay!";
 
-        // $trackStream = new TwitterPhirehose(OAUTH_TOKEN, OAUTH_SECRET, Phirehose::METHOD_FILTER);
-
-        // $track = (array) $this->option('track');
-        // $trackStream->setTrack($track);
-        // $trackStream->setContainerID($this->argument('container_id'));
-        // $trackStream->consume();
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return array(
-             array('api_key', InputArgument::REQUIRED, 'Twitter API Key'),
-             array('api_secret', InputArgument::REQUIRED, 'Twitter API Secret'),
-             array('oauth_key', InputArgument::REQUIRED, 'Twitter Oauth Key'),
-             array('oauth_secret', InputArgument::REQUIRED, 'Twitter Oauth Secret')
-        );
+        $trackStream = new TwitterPhirehose(OAUTH_TOKEN, OAUTH_SECRET, Phirehose::METHOD_FILTER);
+        $track = (array) 'boston';
+        $trackStream->setTrack($track);
+        $trackStream->setTeamID($this->argument('team_id'));
+        $trackStream->consume();
     }
 }
+

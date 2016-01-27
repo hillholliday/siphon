@@ -7,17 +7,20 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "fennb/phirehose": "dev-master"
+        "fennb/phirehose": "dev-master",
+        "supervisorphp/configuration": "^0.2.0",
+        "league/flysystem": "^1.0",
+        "graham-campbell/flysystem": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
-        "lstrojny/fxmlrpc": "0.9.3",
-        "guzzlehttp/guzzle": "^4.0",
-        "zendframework/zend-xmlrpc": ">=2.3.3",
-        "supervisorphp/configuration": "^0.2"
+        "supervisorphp/supervisor": "^3.0",
+        "lstrojny/fxmlrpc": "0.10.0",
+        "egeloen/http-adapter": "*",
+        "guzzlehttp/guzzle" : "*"
     },
     "autoload": {
         "classmap": [

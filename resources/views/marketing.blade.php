@@ -9,15 +9,14 @@
     </head>
     <body id="home">
         <div class="logo">
-            {{-- <h2>my channel</h2>
+            <h2>my channel</h2>
             <h3>social aggregation platform</h3>
             @if(\Auth::check())
                 <button>dashboard</button>
             @else
                 <button>signup</button>
                 <button>login</button>
-            @endif --}}
-
+            @endif
         </div>
         <script async src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
